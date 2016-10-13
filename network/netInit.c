@@ -20,6 +20,6 @@ void netInit(void)
   {
     fprintf(CONSOLE, "%s\n", "ETH0 failed to open");
   }
-
+/*initialize ARP*/
   arpInit();
 }
