@@ -23,6 +23,9 @@
 /*ARP entry resolved if it is USED and RESOLVED*/
 #define ARP_RESOLVED 3
 #define ARP_NTHRWAIT 10
+/*define ARP operations*/
+#define ARP_OP_RQST 1
+#define ARP_OP_REPLY 2
 /*WILL ADD MORE AS NECESSARY*/
 
 /*define the offsets for the addresses*/
@@ -72,5 +75,6 @@ void arpDaemon(void);
 void arpInit(void);
 syscall arpRecv(struct ethergram *pkt);
 syscall arpResolve(uchar *ipaddr, uchar *mac);
+syscall arpReply(struct ethergram *pkt);
 
 #endif

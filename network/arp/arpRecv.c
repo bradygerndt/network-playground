@@ -8,7 +8,7 @@ syscall arpRecv(struct ethergram *pkt)
   uchar *hIp, *sMac, *sIp, *dIp;
   int mem;
 
-  dIp = (uchar *) malloc(ETH_ADDR_LEN);
+  dIp = (uchar *) malloc(IP_ADDR_LEN);
 
   dot2ip(nvramGet("lan_ipaddr\0"), hIp);
   arp = (struct arpgram *)pkt->data;
@@ -32,6 +32,7 @@ syscall arpRecv(struct ethergram *pkt)
   if(0 == mem)
   {
     fprintf(CONSOLE, "%s\n", "This packet is for me!");
+    arpReply(pkt);
   }
 
   fprintf(CONSOLE, "\n\n");
