@@ -59,12 +59,10 @@ struct arpgram
 struct arpEntry
 {
   ushort state;
-  struct netif *nif;
   uchar hwaddr;
   uchar praddr;
   int expires;
-  //tid_typ waiting[ARP_NTHRWAIT];
-  int count;
+
 };
 
 /*ARP Table*/
