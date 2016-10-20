@@ -63,4 +63,7 @@ syscall arpReply(struct ethergram *pkt)
     fprintf(CONSOLE, "%s\n", "Packet failed to send");
   }
 
+  free(dIp);
+  free(buf);
+
 }

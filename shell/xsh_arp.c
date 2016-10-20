@@ -11,18 +11,11 @@
 int isInit = 0;
 command xsh_arp(int nargs, char *args[])
 {
-
-	if(!isInit)
-	{
-		create semaphore and set isInit to 1 so that this section is skipped in the
-		future.
-
-	}
 	uchar packet[PKTSZ];
 	uchar *pkt = packet;
 	int i = 0;
 
-	fprintf(CONSOLE, "%s\n", "arp works");
+	arpResolve();
 
 	// Zero out the packet buffer.
 	bzero(packet, PKTSZ);
