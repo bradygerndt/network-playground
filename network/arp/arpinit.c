@@ -9,7 +9,7 @@ void arpInit(void)
 {
 
   int i = 0;
-  sem = semcreate(0);
+  sem = semcreate(1);
 
   /*initialize the ARP table*/
   for (i = 0; i < ARP_NUM_ENTRY; i++)
