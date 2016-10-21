@@ -7,8 +7,11 @@ syscall arpRecv(struct ethergram *pkt)
   uchar *hIp, *dIp;
   int mem, i;
 
+  i = 0;
+  fprintf(CONSOLE, "int I is %d\n", i);
 
   dIp = (uchar *) malloc(IP_ADDR_LEN);
+  hIp = (uchar *) malloc(IP_ADDR_LEN);
 
   dot2ip(nvramGet("lan_ipaddr\0"), hIp);
   arp = (struct arpgram *)pkt->data;
@@ -53,6 +56,9 @@ syscall arpRecv(struct ethergram *pkt)
 
 
   fprintf(CONSOLE, "\n\n");
+
+  free(hIp);
+  free(dIp);
 
 
 
