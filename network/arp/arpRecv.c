@@ -6,9 +6,7 @@ syscall arpRecv(struct ethergram *pkt)
   ushort type;
   uchar *hIp, *dIp;
   int mem, i;
-
-  i = 0;
-  fprintf(CONSOLE, "int I is %d\n", i);
+  
 
   dIp = (uchar *) malloc(IP_ADDR_LEN);
   hIp = (uchar *) malloc(IP_ADDR_LEN);
@@ -38,11 +36,18 @@ syscall arpRecv(struct ethergram *pkt)
     //fprintf(CONSOLE, "%s\n", "This packet is for me!");
     if(ARP_REPLY == arp->op)
     {
-      fprintf(CONSOLE, "%s\n", "IF arp reply works");
-      // for (i = 0; i < ARP_NUM_ENTRY; i++)
-      // {
-      //   fprintf(CONSOLE, "%s\n", "for works");
-      // }
+      wait(sem);
+
+      for (i = 0; i < ARP_NUM_ENTRY; i++)
+      {
+        if(arptab[i].state == ARP_FREE)
+        {
+          arptab[i].state == ARP_USED;
+          memcpy(&arptab[i].hwaddr, &arp->addr[ARP_ADDR_SHA], ETH_ADDR_LEN);
+          memcpy(&arptab[i].praddr, &arp->addr[ARP_ADDR_SPA], IP_ADDR_LEN);
+          break;
+        }
+      }
     }
     else
     {
