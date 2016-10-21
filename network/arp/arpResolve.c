@@ -1,6 +1,6 @@
 #include <xinu.h>
 
-syscall arpResolve ()//(uchar *ipaddr, uchar *mac)
+syscall arpResolve (uchar *ipaddr, uchar *mac)
 {
   struct arpgram *arp = NULL;
   struct ethergram *egram = NULL;
@@ -12,8 +12,9 @@ syscall arpResolve ()//(uchar *ipaddr, uchar *mac)
   mac = control(ETH0, ETH_CTRL_GET_MAC, (ulong) mac, 0);
   ip = nvramGet("lan_ipaddr\0");
 
-  fprintf(CONSOLE, "%s\n", "Calling the arp resolve yo!");
-  fprintf(CONSOLE, "%s\n", ip);
+
+free(mac);
+free(ip);
 
   return OK;
 }
