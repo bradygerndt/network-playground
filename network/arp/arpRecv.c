@@ -32,9 +32,24 @@ fprintf(CONSOLE, "%s\n", "worked");
   if(0 == mem)
   {
     //fprintf(CONSOLE, "%s\n", "This packet is for me!");
+    if(ARP_REPLY == arp->op)
+    {
+      for(int i = 0; i < ARP_NUM_ENTRY; i++)
+      {
+        if artab[i].state == ARP_FREE
+        {
+            arptab[i].state = ARP_USED;
+            memcpy(&arptab[i].hwaddr, arp->addr[ARP_ADDR_SHA], ETH_ADDR_LEN);
+            memcpy(&arptab[i].praddr, arp->addr[ARP_ADDR_SPA], IP_ADDR_LEN);
+            arptab[i].expires = clocktime + 1800;
+        }
+      }
+    }
     arpReply(pkt);
 
   }
+
+
 
   fprintf(CONSOLE, "\n\n");
 
