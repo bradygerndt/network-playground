@@ -5,7 +5,8 @@ syscall arpRecv(struct ethergram *pkt)
   struct arpgram *arp = NULL;
   ushort type;
   uchar *hIp, *dIp;
-  int mem;
+  int mem, i;
+
 
   dIp = (uchar *) malloc(IP_ADDR_LEN);
 
@@ -13,8 +14,6 @@ syscall arpRecv(struct ethergram *pkt)
   arp = (struct arpgram *)pkt->data;
   memcpy(dIp, &arp->addr[ARP_ADDR_DPA], IP_ADDR_LEN);
   mem = memcmp(hIp, dIp, IP_ADDR_LEN);
-
-fprintf(CONSOLE, "%s\n", "worked");
 
 
   fprintf(CONSOLE, "Hardware type --> %d\n", ntohs(arp->hwtype));
@@ -31,21 +30,23 @@ fprintf(CONSOLE, "%s\n", "worked");
 
   if(0 == mem)
   {
+
+    //fprintf(CONSOLE, "I is %d\n", i);
     //fprintf(CONSOLE, "%s\n", "This packet is for me!");
     if(ARP_REPLY == arp->op)
     {
-      for(int i = 0; i < ARP_NUM_ENTRY; i++)
-      {
-        if artab[i].state == ARP_FREE
-        {
-            arptab[i].state = ARP_USED;
-            memcpy(&arptab[i].hwaddr, arp->addr[ARP_ADDR_SHA], ETH_ADDR_LEN);
-            memcpy(&arptab[i].praddr, arp->addr[ARP_ADDR_SPA], IP_ADDR_LEN);
-            arptab[i].expires = clocktime + 1800;
-        }
-      }
+      fprintf(CONSOLE, "%s\n", "IF arp reply works");
+      // for (i = 0; i < ARP_NUM_ENTRY; i++)
+      // {
+      //   fprintf(CONSOLE, "%s\n", "for works");
+      // }
     }
-    arpReply(pkt);
+    else
+    {
+      fprintf(CONSOLE, "%s\n", "Replying");
+      arpReply(pkt);
+    }
+
 
   }
 
