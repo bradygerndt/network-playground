@@ -7,7 +7,7 @@ void arpDaemon()
   uchar *pkt = NULL;
   struct ethergram *egram = NULL;
   ushort type;
-  uchar data;
+  //uchar data;
 
  // struct ethergram *ethgram = NULL;
   pkt = (uchar *) malloc(PKTSZ);
@@ -26,12 +26,13 @@ void arpDaemon()
        egram = (struct ethergram *) malloc(sizeof(PKTSZ));
        egram = (struct ethergram *) pkt;
        type = ntohs(egram->type);
-       data = (egram->data);
+       //data = (egram->data);
 
        if (type == ETYPE_ARP)
        {
         fprintf(CONSOLE, "%s\n", "Got dat yung ARP packet");
         arpRecv(pkt);
+        free(egram);
         //fprintf(CONSOLE, "%x\n", data);
 
        }

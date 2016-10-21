@@ -2,6 +2,7 @@
 #define _ARP_H_
 
 #include <kernel.h>
+#include <semaphore.h>
 
 
 
@@ -67,6 +68,9 @@ struct arpEntry
 
 /*ARP Table*/
 extern struct arpEntry arptab[ARP_NUM_ENTRY];
+
+/*semaphore*/
+extern semaphore sem;
 
 /*function prototypes for ARP*/
 void arpDaemon(void);
