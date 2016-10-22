@@ -56,7 +56,7 @@ syscall arpRecv(struct ethergram *pkt)
     {
       fprintf(CONSOLE, "%s\n", "Replying");
       arpReply(pkt);
-      //arpResolve(&arp-addr[ARP_ADDR_SPA,] &sMac);
+      arpResolve(&arp-addr[ARP_ADDR_SPA,] &sMac);
     }
 
 
