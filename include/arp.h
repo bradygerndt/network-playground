@@ -9,7 +9,7 @@
 /*define the hardware types - only ethernet for our purposes*/
 #define ARP_HW_ETHERNET 1
 /*ARP protocol types*/
-#define ARP_PROTOTYPE_IPv4 ETHER_TYPE_IPv4
+#define ARP_PRTYPE_IPv4 ETYPE_IPv4
 /*ARP Operations - Request and reply*/
 #define ARP_RQST 1
 #define ARP_REPLY 2
@@ -34,7 +34,8 @@
 #define ARP_ADDR_SPA ETH_ADDR_LEN
 #define ARP_ADDR_DHA ARP_ADDR_SPA + IP_ADDR_LEN
 #define ARP_ADDR_DPA ARP_ADDR_DHA + ETH_ADDR_LEN
-
+/*Broadcast Address*/
+#define ARP_BROADCAST_ADDR 000000000000
 /*ARP packet*/
 
 struct arpgram

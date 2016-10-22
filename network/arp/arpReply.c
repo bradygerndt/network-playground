@@ -11,7 +11,7 @@ syscall arpReply(struct ethergram *pkt)
   {
     return SYSERR;
   }
-
+  /*need to allocate memory for the arp packet!!!!!!*/
   arp = (struct arpgram *)pkt->data;
   //Hold the a spot for the source IP
   memcpy(dIp, &arp->addr[ARP_ADDR_DPA], IP_ADDR_LEN);

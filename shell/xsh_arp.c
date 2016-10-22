@@ -15,7 +15,7 @@ command xsh_arp(int nargs, char *args[])
 	uchar *pkt = packet;
 	int i = 0;
 
-	arpResolve();
+	//arpResolve();
 
 	// Zero out the packet buffer.
 	bzero(packet, PKTSZ);
