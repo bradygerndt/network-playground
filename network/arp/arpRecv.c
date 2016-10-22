@@ -43,7 +43,7 @@ syscall arpRecv(struct ethergram *pkt)
       {
         if(arptab[i].state == ARP_FREE)
         {
-          arptab[i].state == ARP_USED;
+          arptab[i].state = ARP_USED;
           memcpy(&arptab[i].hwaddr, &arp->addr[ARP_ADDR_SHA], ETH_ADDR_LEN);
           memcpy(&arptab[i].praddr, &arp->addr[ARP_ADDR_SPA], IP_ADDR_LEN);
           arptab[i].expires = clocktime + 1800;
@@ -56,7 +56,7 @@ syscall arpRecv(struct ethergram *pkt)
     {
       fprintf(CONSOLE, "%s\n", "Replying");
       arpReply(pkt);
-      arpResolve(&arp-addr[ARP_ADDR_SPA,] &sMac);
+      arpResolve(&arp->addr[ARP_ADDR_SPA], &sMac);
     }
 
 

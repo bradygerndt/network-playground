@@ -34,8 +34,7 @@
 #define ARP_ADDR_SPA ETH_ADDR_LEN
 #define ARP_ADDR_DHA ARP_ADDR_SPA + IP_ADDR_LEN
 #define ARP_ADDR_DPA ARP_ADDR_DHA + ETH_ADDR_LEN
-/*Broadcast Address*/
-#define ARP_BROADCAST_ADDR 000000000000
+
 /*ARP packet*/
 
 struct arpgram
