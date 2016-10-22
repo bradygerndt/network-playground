@@ -76,7 +76,7 @@ extern semaphore sem;
 void arpDaemon(void);
 void arpInit(void);
 syscall arpRecv(struct ethergram *pkt);
-syscall arpResolve(void); //(uchar *ipaddr, uchar *mac);
+syscall arpResolve(uchar *ipaddr, uchar *mac);
 syscall arpReply(struct ethergram *pkt);
 
 #endif

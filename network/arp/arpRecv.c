@@ -4,13 +4,13 @@ syscall arpRecv(struct ethergram *pkt)
 {
   struct arpgram *arp = NULL;
   ushort type;
-  uchar *sIp, *dIp, *sHwa;
+  uchar *sIp, *dIp, *sMac;
   int mem, i;
 
 
   dIp = (uchar *) malloc(IP_ADDR_LEN);
   sIp = (uchar *) malloc(IP_ADDR_LEN);
-  sHwa = (uchar *) malloc(ETH_ADDR_LEN);
+  sMac = (uchar *) malloc(ETH_ADDR_LEN);
 
   dot2ip(nvramGet("lan_ipaddr\0"), sIp);
   arp = (struct arpgram *)pkt->data;
@@ -46,6 +46,7 @@ syscall arpRecv(struct ethergram *pkt)
           arptab[i].state == ARP_USED;
           memcpy(&arptab[i].hwaddr, &arp->addr[ARP_ADDR_SHA], ETH_ADDR_LEN);
           memcpy(&arptab[i].praddr, &arp->addr[ARP_ADDR_SPA], IP_ADDR_LEN);
+          arptab[i].expires = clocktime + 1800;
           signal(sem);
           break;
         }
@@ -55,6 +56,7 @@ syscall arpRecv(struct ethergram *pkt)
     {
       fprintf(CONSOLE, "%s\n", "Replying");
       arpReply(pkt);
+      //arpResolve(&arp-addr[ARP_ADDR_SPA,] &sMac);
     }
 
 

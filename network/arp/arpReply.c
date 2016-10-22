@@ -65,5 +65,6 @@ syscall arpReply(struct ethergram *pkt)
 
   free(dIp);
   free(buf);
+  return OK;
 
 }
