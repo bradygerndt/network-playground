@@ -30,7 +30,7 @@ void arpDaemon()
 
        if (type == ETYPE_ARP)
        {
-        fprintf(CONSOLE, "%s\n", "Got dat yung ARP packet");
+        //fprintf(CONSOLE, "%s\n", "Got dat yung ARP packet");
         arpRecv(pkt);
         free(egram);
         //fprintf(CONSOLE, "%x\n", data);
