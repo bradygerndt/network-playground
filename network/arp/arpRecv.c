@@ -45,10 +45,10 @@ syscall arpRecv(struct ethergram *pkt)
     if(arp->op == ARP_RQST)
     {
       arpReply(pkt);
-      if(!arpLookUp(rIp))
-      {
-        fprintf(CONSOLE, "%s\n", "Not in the table");
-      }
+      // if(!arpLookUp(rIp))
+      // {
+      //   fprintf(CONSOLE, "%s\n", "Not in the table");
+      // }
     }
 
 

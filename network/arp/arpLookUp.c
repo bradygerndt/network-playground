@@ -7,6 +7,8 @@
 
 int arpLookUp(uchar ipaddr[IP_ADDR_LEN])
 {
+  uchar mac;
+  int i;
   wait(sem);
   for (i = 0; i < ARP_NUM_ENTRY; i++)
   {
