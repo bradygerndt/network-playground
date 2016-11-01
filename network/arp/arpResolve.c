@@ -38,7 +38,7 @@ syscall arpResolve (uchar *ipaddr, uchar *mac)
     arpCast->prtype = htons(ARP_PRTYPE_IPv4);
     arpCast->hwalen = ETH_ADDR_LEN;
     arpCast->pralen = IP_ADDR_LEN;
-    arpCast->op = htons(ARP_OP_RQST);
+    arpCast->op = htons(ARP_RQST);
     memcpy(&arpCast->addr[ARP_ADDR_SHA], sMac, ETH_ADDR_LEN);
     memcpy(&arpCast->addr[ARP_ADDR_SPA], ip, IP_ADDR_LEN);
     memcpy(&arpCast->addr[ARP_ADDR_DPA], ipaddr, IP_ADDR_LEN);

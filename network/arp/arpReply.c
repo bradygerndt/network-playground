@@ -18,7 +18,7 @@ syscall arpReply(struct ethergram *pkt)
   memcpy(dIp, &arp->addr[ARP_ADDR_DPA], IP_ADDR_LEN);
 
   /*build the ARP reply header*/
-  arp->op = htons(ARP_OP_REPLY);
+  arp->op = htons(ARP_REPLY);
   /*set DHA*/
   memcpy(&arp->addr[ARP_ADDR_DHA], &arp->addr[ARP_ADDR_SPA], arp->hwalen);
   /*Set DPA*/

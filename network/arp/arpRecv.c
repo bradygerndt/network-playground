@@ -20,6 +20,7 @@ syscall arpRecv(struct ethergram *pkt)
   mem = memcmp(sIp, dIp, IP_ADDR_LEN);
 
 
+
   fprintf(CONSOLE, "%s\n", "Recieving from:" );
   fprintf(CONSOLE, "Hardware type --> %d\n", arp->hwtype);
   fprintf(CONSOLE, "Protocol type --> %04x\n", arp->prtype);
@@ -41,32 +42,43 @@ syscall arpRecv(struct ethergram *pkt)
 
     fprintf(CONSOLE, "%s\n", "This packet is for me!");
 
-
-    if(ARP_REPLY == arp->op)
+    if(arp->op == ARP_RQST)
     {
-      wait(sem);
-      for (i = 0; i < ARP_NUM_ENTRY; i++)
+      arpReply(pkt);
+      if(!arpLookUp(rIp))
       {
-        fprintf(CONSOLE, "%s\n", "ARP Reply received");
-        if(arptab[i].state == ARP_FREE)
-        {
-
-          arptab[i].state = ARP_USED;
-          memcpy(&arptab[i].hwaddr, &arp->addr[ARP_ADDR_SHA], ETH_ADDR_LEN);
-          memcpy(&arptab[i].praddr, &arp->addr[ARP_ADDR_SPA], IP_ADDR_LEN);
-          arptab[i].expires = clocktime + 1800;
-          signal(sem);
-          break;
-        }
+        fprintf(CONSOLE, "%s\n", "Not in the table");
       }
-      signal(sem);
     }
-    else
-    {
 
-      //arpReply(pkt);
-      arpResolve(rIp, sMac);
-    }
+
+
+    //arpResolve(rIp, sMac);
+
+    // if(ARP_REPLY == arp->op)
+    // {
+    //   fprintf(CONSOLE, "%s\n", "ARP Reply received");
+    //   wait(sem);
+    //   for (i = 0; i < ARP_NUM_ENTRY; i++)
+    //   {
+    //     if(arptab[i].state == ARP_FREE)
+    //     {
+    //       arptab[i].state = ARP_USED;
+    //       memcpy(&arptab[i].hwaddr, &arp->addr[ARP_ADDR_SHA], ETH_ADDR_LEN);
+    //       memcpy(&arptab[i].praddr, &arp->addr[ARP_ADDR_SPA], IP_ADDR_LEN);
+    //       arptab[i].expires = clocktime + 1800;
+    //       signal(sem);
+    //       break;
+    //     }
+    //   }
+    //   signal(sem);
+    // }
+    // else
+    // {
+    //
+    //   //arpReply(pkt);
+    //   arpResolve(rIp, sMac);
+    // }
 
 
   }
