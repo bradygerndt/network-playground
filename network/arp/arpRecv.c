@@ -17,6 +17,7 @@ syscall arpRecv(struct ethergram *pkt)
   arp = (struct arpgram *)pkt->data;
   memcpy(dIp, &arp->addr[ARP_ADDR_DPA], IP_ADDR_LEN);
   memcpy(rIp, &arp->addr[ARP_ADDR_SPA], IP_ADDR_LEN);
+  memcpy(sMac, &arp->addr[ARP_ADDR_SHA], ETH_ADDR_LEN);
   mem = memcmp(sIp, dIp, IP_ADDR_LEN);
 
 
@@ -42,18 +43,27 @@ syscall arpRecv(struct ethergram *pkt)
 
     fprintf(CONSOLE, "%s\n", "This packet is for me!");
 
-    if(arp->op == ARP_RQST)
+
+    if(ntohs(arp->op) == ARP_RQST)
     {
       arpReply(pkt);
-      // if(!arpLookUp(rIp))
-      // {
-      //   fprintf(CONSOLE, "%s\n", "Not in the table");
-      // }
+      if(!arpLookUp(rIp))
+      {
+        fprintf(CONSOLE, "%s\n", "Adding address to the table");
+        arpAlloc(rIp, sMac);
+      }
     }
 
 
 
+
+
+
+
+
+
     //arpResolve(rIp, sMac);
+
 
     // if(ARP_REPLY == arp->op)
     // {

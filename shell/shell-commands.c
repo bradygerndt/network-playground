@@ -29,6 +29,7 @@ struct centry commandtab[] = {
     {"ps", FALSE, xsh_ps},
     {"test", FALSE, xsh_test},
     {"arp", FALSE, xsh_arp},
+    //add ping entry
     {"?", FALSE, xsh_help}
 
 };

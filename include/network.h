@@ -240,4 +240,22 @@ struct dhcpgram                 /**< DHCP Packet Variables          */
 #define DHCP_MESSAGE_RELEASE  0x07
 #define DHCP_MESSAGE_INFORM   0x08
 
-#endif 
+/*ICMP Struct and definitions*/
+#define ICMP_ECHO_RQST  0x08
+#define ICMP_ECHO_REPLY 0x00
+
+
+
+struct icmpgram
+{
+	ushort type;
+	ushort code;
+	ulong id;
+	ulong seq;
+	uchar data[1];
+}
+
+
+
+
+#endif

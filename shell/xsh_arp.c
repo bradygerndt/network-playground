@@ -13,9 +13,18 @@ command xsh_arp(int nargs, char *args[])
 {
 	uchar packet[PKTSZ];
 	uchar *pkt = packet;
-	int i = 0;
 
-	//arpResolve();
+	int i;
+  wait(sem);
+  for (i = 0; i < ARP_NUM_ENTRY; i++)
+  {
+    if(ARP_USED == arptab[i].state)
+    {
+			fprintf(CONSOLE, "%d.%d.%d.%d\n", arptab[i].praddr[0], arptab[i].praddr[1], arptab[i].praddr[2], arptab[i].praddr[3]);
+		}
+	}
+	signal(sem);
+
 
 	// Zero out the packet buffer.
 	bzero(packet, PKTSZ);

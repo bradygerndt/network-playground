@@ -58,10 +58,9 @@ struct arpgram
 struct arpEntry
 {
   ushort state;
-  uchar hwaddr;
-  uchar praddr;
   int expires;
-
+  uchar hwaddr[ETH_ADDR_LEN];
+  uchar praddr[IP_ADDR_LEN];
 };
 
 /*ARP Table*/
@@ -77,5 +76,6 @@ syscall arpRecv(struct ethergram *pkt);
 syscall arpResolve(uchar *ipaddr, uchar *mac);
 syscall arpReply(struct ethergram *pkt);
 int arpLookUp(uchar ipaddr[IP_ADDR_LEN]);
+int arpAlloc(uchar ipaddr[IP_ADDR_LEN], uchar mac[ETH_ADDR_LEN]);
 
 #endif
