@@ -34,6 +34,7 @@ syscall arpRecv(struct ethergram *pkt)
   fprintf(CONSOLE, "Destination IP --> %d.%d.%d.%d\n", arp->addr[ARP_ADDR_DPA], arp->addr[17], arp->addr[18], arp->addr[19]);
   fprintf(CONSOLE, "my IP address is %d.%d.%d.%d\n", sIp[0], sIp[1], sIp[2], sIp[3]);
   fprintf(CONSOLE, "Ether Destination MAC --> %02x:%02x:%02x:%02x:%02x:%02x\n", pkt->dst[0], pkt->dst[1],pkt->dst[2], pkt->dst[3], pkt->dst[4], pkt->dst[5], pkt->dst[ETH_ADDR_LEN]);
+  fprintf(CONSOLE, "Ether Dst as hex %x\n", pkt->dst);
   fprintf(CONSOLE, "Ether Source MAC --> %02x:%02x:%02x:%02x:%02x:%02x\n", pkt->src[0], pkt->src[1],pkt->src[2], pkt->src[3], pkt->src[4], pkt->src[5], pkt->src[ETH_ADDR_LEN]);
   fprintf(CONSOLE, "ETYPE = %d\n", ntohs(pkt->type));
 
