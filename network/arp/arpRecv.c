@@ -47,23 +47,19 @@ syscall arpRecv(struct ethergram *pkt)
 
     if(ntohs(arp->op) == ARP_RQST)
     {
-      arpReply(pkt);
-      if(!arpLookUp(rIp))
-      {
-        fprintf(CONSOLE, "%s\n", "Adding address to the table");
-        arpAlloc(rIp, sMac);
-      }
+      // arpReply(pkt);
+      // if(!arpLookUp(rIp))
+      // {
+      //   fprintf(CONSOLE, "%s\n", "Adding address to the table");
+      //   arpAlloc(rIp, sMac);
+
+      arpResolve(rIp, sMac);
+
+      // }
     }
 
 
 
-
-
-
-
-
-
-    //arpResolve(rIp, sMac);
 
 
     // if(ARP_REPLY == arp->op)
@@ -93,7 +89,6 @@ syscall arpRecv(struct ethergram *pkt)
 
 
   }
-
 
 
   fprintf(CONSOLE, "\n\n");
