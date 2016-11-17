@@ -53,11 +53,10 @@ syscall arpRecv(struct ethergram *pkt)
         fprintf(CONSOLE, "%s\n", "Adding address to the table");
         arpAlloc(rIp, sMac);
 
-<<<<<<< HEAD
+
       //arpResolve(rIp, sMac);
-=======
       // arpResolve(rIp, sMac);
->>>>>>> 98459c4ca00c347153e7a2e021a3ef2d92799777
+
 
       }
     }

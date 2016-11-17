@@ -23,7 +23,7 @@ void arpDaemon()
      {
     	 //fprintf(CONSOLE, "%s\n", "Got something!");
        //might need to make this ethergram a pointer later
-       egram = (struct ethergram *) malloc(sizeof(PKTSZ));
+       egram = (struct ethergram *) malloc(PKTSZ);
        egram = (struct ethergram *) pkt;
        type = ntohs(egram->type);
        //data = (egram->data);

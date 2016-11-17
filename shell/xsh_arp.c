@@ -13,18 +13,6 @@ command xsh_arp(int nargs, char *args[])
 	uchar new[] = "-n";
 	uchar delete[] = "-d";
 
-<<<<<<< HEAD
-	int i;
-  wait(sem);
-  for (i = 0; i < ARP_NUM_ENTRY; i++)
-  {
-    if(ARP_USED == arptab[i].state)
-    {
-			fprintf(CONSOLE, "%d.%d.%d.%d ", arptab[i].praddr[0], arptab[i].praddr[1], arptab[i].praddr[2], arptab[i].praddr[3]);
-			fprintf(CONSOLE, "%s", "at ");
-			fprintf(CONSOLE, "%02x:%02x:%02x:%02x:%02x:%02x\n", arptab[i].hwaddr[0], arptab[i].hwaddr[1],
-			arptab[i].hwaddr[2], arptab[i].hwaddr[3], arptab[i].hwaddr[4], arptab[i].hwaddr[5]);
-=======
 	if( 2 > nargs)
 	{
 		int i;
