@@ -36,7 +36,6 @@ command xsh_arp(int nargs, char *args[])
 		{
 			if(2 < nargs)
 			{
-				fprintf(CONSOLE, "%s\n", "Arping motha jamma");
 				dot2ip(args[2], ip);
 				arpResolve(&ip, &dumbMac);
 			}
@@ -48,7 +47,6 @@ command xsh_arp(int nargs, char *args[])
 		}
 	}
 
-fprintf(CONSOLE, "Nargs is %d\n", nargs);
 
 
 /* If necessary, zero out all of the indexes that were used in

@@ -5,9 +5,9 @@ syscall arpResolve (uchar *ipaddr, uchar *mac)
   struct arpgram *arpCast = NULL;
   struct arpgram *arpTest = NULL;
   struct ethergram *egram = NULL;
-  uchar *buf;
+  uchar *buf = NULL;
   uchar sMac[ETH_ADDR_LEN], ip[IP_ADDR_LEN];
-  int i, j, k;
+  int i, j, k, lenWritten;
 
 
   buf = (uchar *) malloc(PKTSZ);
@@ -84,31 +84,32 @@ syscall arpResolve (uchar *ipaddr, uchar *mac)
     //  fprintf(CONSOLE, "Ether Source MAC --> %02x:%02x:%02x:%02x:%02x:%02x\n", egram->src[0], egram->src[1],egram->src[2], egram->src[3], egram->src[4], egram->src[5], egram->src[ETH_ADDR_LEN]);
 
     /* check to see if ethergram is carrying arp correctly. */
-    fprintf(CONSOLE, "%s\n", "Testing the contents of the packaged ethergram egram");
-     fprintf(CONSOLE, "Hardware type --> %d\n", arpTest->hwtype);
-     fprintf(CONSOLE, "Protocol type --> %04x\n", arpTest->prtype);
-     fprintf(CONSOLE, "Hardware length --> %d\n", arpTest->hwalen);
-     fprintf(CONSOLE, "Protocol length --> %d\n", arpTest->pralen);
-     fprintf(CONSOLE, "Op --> %04x\n", arpTest->op);
-     fprintf(CONSOLE, "Source MAC --> %02x:%02x:%02x:%02x:%02x:%02x\n", arpTest->addr[0], arpTest->addr[1],arpTest->addr[2], arpTest->addr[3], arpTest->addr[4], arpTest->addr[5], arpTest->addr[ETH_ADDR_LEN]);
-     fprintf(CONSOLE, "Source IP --> %d.%d.%d.%d\n", arpTest->addr[ARP_ADDR_SPA], arpTest->addr[7], arpTest->addr[8], arpTest->addr[9]);
-     fprintf(CONSOLE, "Destination MAC --> %02x:%02x:%02x:%02x:%02x:%02x\n", arpTest->addr[ARP_ADDR_DHA], arpTest->addr[11], arpTest->addr[12], arpTest->addr[13], arpTest->addr[14], arpTest->addr[15]);
-     fprintf(CONSOLE, "Destination IP --> %d.%d.%d.%d\n", arpTest->addr[ARP_ADDR_DPA], arpTest->addr[17], arpTest->addr[18], arpTest->addr[19]);
-     fprintf(CONSOLE, "Ether Destination MAC --> %x:%x:%x:%x:%x:%x\n", egram->dst[0], egram->dst[1],egram->dst[2], egram->dst[3], egram->dst[4], egram->dst[5], egram->dst[ETH_ADDR_LEN]);
-     fprintf(CONSOLE, "Ether Source MAC --> %02x:%02x:%02x:%02x:%02x:%02x\n", egram->src[0], egram->src[1],egram->src[2], egram->src[3], egram->src[4], egram->src[5], egram->src[ETH_ADDR_LEN]);
-     fprintf(CONSOLE, "%x\n", egram);
+    // fprintf(CONSOLE, "%s\n", "Testing the contents of the packaged ethergram egram");
+    //  fprintf(CONSOLE, "Hardware type --> %d\n", arpTest->hwtype);
+    //  fprintf(CONSOLE, "Protocol type --> %04x\n", arpTest->prtype);
+    //  fprintf(CONSOLE, "Hardware length --> %d\n", arpTest->hwalen);
+    //  fprintf(CONSOLE, "Protocol length --> %d\n", arpTest->pralen);
+    //  fprintf(CONSOLE, "Op --> %04x\n", arpTest->op);
+    //  fprintf(CONSOLE, "Source MAC --> %02x:%02x:%02x:%02x:%02x:%02x\n", arpTest->addr[0], arpTest->addr[1],arpTest->addr[2], arpTest->addr[3], arpTest->addr[4], arpTest->addr[5], arpTest->addr[ETH_ADDR_LEN]);
+    //  fprintf(CONSOLE, "Source IP --> %d.%d.%d.%d\n", arpTest->addr[ARP_ADDR_SPA], arpTest->addr[7], arpTest->addr[8], arpTest->addr[9]);
+    //  fprintf(CONSOLE, "Destination MAC --> %02x:%02x:%02x:%02x:%02x:%02x\n", arpTest->addr[ARP_ADDR_DHA], arpTest->addr[11], arpTest->addr[12], arpTest->addr[13], arpTest->addr[14], arpTest->addr[15]);
+    //  fprintf(CONSOLE, "Destination IP --> %d.%d.%d.%d\n", arpTest->addr[ARP_ADDR_DPA], arpTest->addr[17], arpTest->addr[18], arpTest->addr[19]);
+    //  fprintf(CONSOLE, "Ether Destination MAC --> %x:%x:%x:%x:%x:%x\n", egram->dst[0], egram->dst[1],egram->dst[2], egram->dst[3], egram->dst[4], egram->dst[5], egram->dst[ETH_ADDR_LEN]);
+    //  fprintf(CONSOLE, "Ether Source MAC --> %02x:%02x:%02x:%02x:%02x:%02x\n", egram->src[0], egram->src[1],egram->src[2], egram->src[3], egram->src[4], egram->src[5], egram->src[ETH_ADDR_LEN]);
+    //  fprintf(CONSOLE, "ETYPE = %d\n", ntohs(egram->type));
 
 
 
 
-  if((write(ETH0, buf, PKTSZ)) == SYSERR)
+  if((lenWritten = write(ETH0, egram, 60)) == SYSERR)
   {
     fprintf(CONSOLE, "%s\n", "Packet failed to send");
   }
   else
   {
-    fprintf(CONSOLE, "%s\n", "Sent ARP Request from Resolve");
+    //fprintf(CONSOLE, "Len written is %d\n", lenWritten);
   }
+
   //Block with a time based while loop
 
 // }
