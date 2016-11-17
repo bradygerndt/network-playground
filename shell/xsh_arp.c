@@ -12,6 +12,7 @@ command xsh_arp(int nargs, char *args[])
 {
 	uchar new[] = "-n";
 	uchar delete[] = "-d";
+	uchar ip[IP_ADDR_LEN], dumbMac[ETH_ADDR_LEN];
 
 	if( 2 > nargs)
 	{
@@ -33,15 +34,21 @@ command xsh_arp(int nargs, char *args[])
 	{
 		if(0 == (strcmp(args[1], &new)))
 		{
-			fprintf(CONSOLE, "%s\n", "New");
+			if(2 < nargs)
+			{
+				fprintf(CONSOLE, "%s\n", "Arping motha jamma");
+				dot2ip(args[2], ip);
+				arpResolve(&ip, &dumbMac);
+			}
+
 		}
 		if(0 == (strcmp(args[1], &delete)))
 		{
 			fprintf(CONSOLE, "%s\n", "Delete");
->>>>>>> 98459c4ca00c347153e7a2e021a3ef2d92799777
 		}
 	}
 
+fprintf(CONSOLE, "Nargs is %d\n", nargs);
 
 
 /* If necessary, zero out all of the indexes that were used in
