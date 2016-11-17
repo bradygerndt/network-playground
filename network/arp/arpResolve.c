@@ -56,9 +56,11 @@ syscall arpResolve (uchar *ipaddr, uchar *mac)
     }
     egram->type = htons(ETYPE_ARP);
 
+    fprintf(CONSOLE, "%s\n", "Before memcpy of egram");
 
     /*Set ARP to ethergram payload*/
     memcpy(&egram->data, arpCast, sizeof(struct arpgram) + 20);
+    fprintf(CONSOLE, "%s\n", "After memcpy of egram");
     /*Copy ethergram to buf*/
     memcpy(buf, &egram, PKTSZ);
 
