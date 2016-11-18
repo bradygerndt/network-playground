@@ -57,7 +57,7 @@ syscall arpReply(struct ethergram *pkt)
 
   /*Copy ethergram to buf*/
   memcpy(buf, &pkt, PKTSZ);
-
+//PKTSZ is too big. I think it's MTU + then some.
   if((write(ETH0, buf, PKTSZ)) == SYSERR)
   {
     fprintf(CONSOLE, "%s\n", "Packet failed to send");
