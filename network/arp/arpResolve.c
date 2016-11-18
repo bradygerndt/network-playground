@@ -34,7 +34,6 @@ syscall arpResolve (uchar *ipaddr, uchar *mac)
       signal(sem);
     }
 
-    fprintf(CONSOLE, "%s\n", "Broadcasting");
     arpCast->hwtype = htons(ARP_HW_ETHERNET);
     arpCast->prtype = htons(ARP_PRTYPE_IPv4);
     arpCast->hwalen = ETH_ADDR_LEN;
@@ -56,11 +55,9 @@ syscall arpResolve (uchar *ipaddr, uchar *mac)
     }
     egram->type = htons(ETYPE_ARP);
 
-    fprintf(CONSOLE, "%s\n", "Before memcpy of egram");
 
     /*Set ARP to ethergram payload*/
     memcpy(&egram->data, arpCast, sizeof(struct arpgram) + 20);
-    fprintf(CONSOLE, "%s\n", "After memcpy of egram");
     /*Copy ethergram to buf*/
     memcpy(buf, &egram, PKTSZ);
 
@@ -105,10 +102,7 @@ syscall arpResolve (uchar *ipaddr, uchar *mac)
   {
     fprintf(CONSOLE, "%s\n", "Packet failed to send");
   }
-  else
-  {
-    //fprintf(CONSOLE, "Len written is %d\n", lenWritten);
-  }
+
 
   //Block with a time based while loop
 

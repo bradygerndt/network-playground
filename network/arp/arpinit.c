@@ -20,7 +20,6 @@ void arpInit(void)
 
 
 
-  fprintf(CONSOLE, "Sem is %d\n", sem);
 
   arpDaemonId = create((void *)arpDaemon, INITSTK, 3, "arpDaemon", 0);
   ready(arpDaemonId, 1);

@@ -27,7 +27,6 @@ void arpDaemon()
        egram = (struct ethergram *) pkt;
        type = ntohs(egram->type);
 
-       fprintf(CONSOLE, "%d\n", egram->type);
        //data = (egram->data);
 
        if (type == ETYPE_ARP)
