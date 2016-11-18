@@ -13,6 +13,8 @@ int arpAlloc(uchar ipaddr[IP_ADDR_LEN], uchar mac[ETH_ADDR_LEN])
       memcpy(&arptab[i].hwaddr, mac, ETH_ADDR_LEN);
       arptab[i].expires = clocktime + 1800;
       signal(sem);
+      fprintf(CONSOLE, "%s\n", "Added");
+
       return TRUE;
       }
     else

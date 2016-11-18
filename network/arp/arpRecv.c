@@ -50,15 +50,13 @@ syscall arpRecv(struct ethergram *pkt)
       arpReply(pkt);
       if(!arpLookUp(rIp))
       {
-        fprintf(CONSOLE, "%s\n", "Adding address to the table");
         arpAlloc(rIp, sMac);
-
-
-      //arpResolve(rIp, sMac);
-      // arpResolve(rIp, sMac);
-
-
       }
+    }
+    else if(ntohs(arp->op) == ARP_REPLY);
+    {
+      fprintf(CONSOLE, "%s\n", "Receiving arp reply");
+      arpAlloc(rIp, sMac);
     }
 
 
