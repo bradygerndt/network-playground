@@ -5,13 +5,9 @@ syscall arpRecv(struct ethergram *pkt)
   struct arpgram *arp = NULL;
   ushort type;
   uchar sIp[IP_ADDR_LEN], dIp[IP_ADDR_LEN], sMac[ETH_ADDR_LEN], rIp[IP_ADDR_LEN];
-  int mem, i;
+  int mem, i, op;
 
 
-  // dIp = (uchar *) malloc(IP_ADDR_LEN);
-  // sIp = (uchar *) malloc(IP_ADDR_LEN);
-  // sMac = (uchar *) malloc(ETH_ADDR_LEN);
-  // rIp = (uchar *) malloc(IP_ADDR_LEN);
 
   dot2ip(nvramGet("lan_ipaddr\0"), sIp);
   arp = (struct arpgram *)pkt->data;
@@ -19,6 +15,7 @@ syscall arpRecv(struct ethergram *pkt)
   memcpy(rIp, &arp->addr[ARP_ADDR_SPA], IP_ADDR_LEN);
   memcpy(sMac, &arp->addr[ARP_ADDR_SHA], ETH_ADDR_LEN);
   mem = memcmp(sIp, dIp, IP_ADDR_LEN);
+  op = ntohs(arp->op);
 
 
 
@@ -27,7 +24,7 @@ syscall arpRecv(struct ethergram *pkt)
   fprintf(CONSOLE, "Protocol type --> %04x\n", arp->prtype);
   fprintf(CONSOLE, "Hardware length --> %d\n", arp->hwalen);
   fprintf(CONSOLE, "Protocol length --> %d\n", arp->pralen);
-  fprintf(CONSOLE, "Op --> %04x\n", arp->op);
+  // fprintf(CONSOLE, "Op --> %d\n", ntohs(arp->op));
   fprintf(CONSOLE, "Source MAC --> %02x:%02x:%02x:%02x:%02x:%02x\n", arp->addr[0], arp->addr[1],arp->addr[2], arp->addr[3], arp->addr[4], arp->addr[5], arp->addr[ETH_ADDR_LEN]);
   fprintf(CONSOLE, "Source IP --> %d.%d.%d.%d\n", arp->addr[ARP_ADDR_SPA], arp->addr[7], arp->addr[8], arp->addr[9]);
   fprintf(CONSOLE, "Destination MAC --> %02x:%02x:%02x:%02x:%02x:%02x\n", arp->addr[ARP_ADDR_DHA], arp->addr[11], arp->addr[12], arp->addr[13], arp->addr[14], arp->addr[15]);
@@ -42,63 +39,24 @@ syscall arpRecv(struct ethergram *pkt)
   if(0 == mem)
   {
 
-    fprintf(CONSOLE, "%s\n", "This packet is for me!");
-
-
-    if(ntohs(arp->op) == ARP_RQST)
+    // fprintf(CONSOLE, "%s\n", "This packet is for me!");
+    if(ARP_RQST == op)
     {
       arpReply(pkt);
+      int l = (arpLookUp(rIp));
       if(!arpLookUp(rIp))
       {
         arpAlloc(rIp, sMac);
       }
     }
-    else if(ntohs(arp->op) == ARP_REPLY);
+    else if(ARP_REPLY == op)
     {
-      fprintf(CONSOLE, "%s\n", "Receiving arp reply");
+      fprintf(CONSOLE, "%s\n", "Receiving arp reply in arp recv");
       arpAlloc(rIp, sMac);
     }
-
-
-
-
-
-    // if(ARP_REPLY == arp->op)
-    // {
-    //   fprintf(CONSOLE, "%s\n", "ARP Reply received");
-    //   wait(sem);
-    //   for (i = 0; i < ARP_NUM_ENTRY; i++)
-    //   {
-    //     if(arptab[i].state == ARP_FREE)
-    //     {
-    //       arptab[i].state = ARP_USED;
-    //       memcpy(&arptab[i].hwaddr, &arp->addr[ARP_ADDR_SHA], ETH_ADDR_LEN);
-    //       memcpy(&arptab[i].praddr, &arp->addr[ARP_ADDR_SPA], IP_ADDR_LEN);
-    //       arptab[i].expires = clocktime + 1800;
-    //       signal(sem);
-    //       break;
-    //     }
-    //   }
-    //   signal(sem);
-    // }
-    // else
-    // {
-    //
-    //   //arpReply(pkt);
-    //   arpResolve(rIp, sMac);
-    // }
-
-
   }
 
 
   fprintf(CONSOLE, "\n\n");
-
-  // free(sIp);
-  // free(dIp);
-  // free(rIp);
-  // free(sMac);
-
-
 
 }

@@ -16,12 +16,8 @@ int arpLookUp(uchar ipaddr[IP_ADDR_LEN])
       arptab[i].expires = clocktime + 1800;
       signal(sem);
       return TRUE;
-      }
-    else
-    {
-      signal(sem);
-      return FALSE;
-
     }
   }
+    signal(sem);
+    return FALSE;
 }
