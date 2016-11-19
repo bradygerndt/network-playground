@@ -11,7 +11,6 @@ syscall arpFree(uchar ipaddr[IP_ADDR_LEN])
     int mem = memcmp(ip, arptab[i].praddr, IP_ADDR_LEN);
     if(0 == mem)
     {
-      fprintf(CONSOLE, "%s\n", "Found a match");
       arptab[i].state = ARP_FREE;
       signal(sem);
       return OK;
