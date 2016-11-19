@@ -3,9 +3,9 @@
 
 
 
-//Checks arp entries for existing ip address. Returns true if exists.
+//Checks arp entries for existing ip address. Returns OK if exists.
 
-int arpLookUp(uchar ipaddr[IP_ADDR_LEN])
+syscall arpLookUp(uchar ipaddr[IP_ADDR_LEN])
 {
   int i;
   wait(sem);
@@ -16,9 +16,9 @@ int arpLookUp(uchar ipaddr[IP_ADDR_LEN])
     {
       arptab[i].expires = clocktime + 1800;
       signal(sem);
-      return TRUE;
+      return OK;
     }
   }
     signal(sem);
-    return FALSE;
+    return SYSERR;
 }

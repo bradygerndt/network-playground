@@ -27,7 +27,7 @@ syscall arpRecv(struct ethergram *pkt)
     {
       arpReply(pkt);
 
-      if(!arpLookUp(rIp))
+      if(OK != arpLookUp(rIp))
       {
         arpAlloc(rIp, sMac);
       }
@@ -35,7 +35,7 @@ syscall arpRecv(struct ethergram *pkt)
 //Add replying ip to arp entry table
     else if(ARP_REPLY == op)
     {
-      if(!arpLookUp(rIp))
+      if(OK != arpLookUp(rIp))
       {
         arpAlloc(rIp, sMac);
       }

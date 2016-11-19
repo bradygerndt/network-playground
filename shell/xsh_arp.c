@@ -43,7 +43,7 @@ command xsh_arp(int nargs, char *args[])
 		}
 		if(0 == (strcmp(args[1], &delete)))
 		{
-			fprintf(CONSOLE, "%s\n", "Delete");
+			arpFree(args[2]);
 		}
 	}
 

@@ -1,6 +1,6 @@
 #include <xinu.h>
 
-int arpAlloc(uchar ipaddr[IP_ADDR_LEN], uchar mac[ETH_ADDR_LEN])
+syscall arpAlloc(uchar ipaddr[IP_ADDR_LEN], uchar mac[ETH_ADDR_LEN])
 {
   int i;
   wait(sem);
@@ -13,10 +13,10 @@ int arpAlloc(uchar ipaddr[IP_ADDR_LEN], uchar mac[ETH_ADDR_LEN])
       memcpy(&arptab[i].hwaddr, mac, ETH_ADDR_LEN);
       arptab[i].expires = clocktime + 1800;
       signal(sem);
-      return TRUE;
+      return OK;
       }
   }
   //No free spots in arp entry
   signal(sem);
-  return FALSE;
+  return SYSERR;
 }

@@ -76,7 +76,8 @@ void arpPrintPkt(struct ethergram *pkt);
 syscall arpRecv(struct ethergram *pkt);
 syscall arpResolve(uchar *ipaddr, uchar *mac);
 syscall arpReply(struct ethergram *pkt);
-int arpLookUp(uchar ipaddr[IP_ADDR_LEN]);
-int arpAlloc(uchar ipaddr[IP_ADDR_LEN], uchar mac[ETH_ADDR_LEN]);
+syscall arpLookUp(uchar ipaddr[IP_ADDR_LEN]);
+syscall arpAlloc(uchar ipaddr[IP_ADDR_LEN], uchar mac[ETH_ADDR_LEN]);
+syscall arpFree(uchar ipaddr[IP_ADDR_LEN]);
 
 #endif
