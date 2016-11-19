@@ -17,11 +17,7 @@ void arpInit(void)
     bzero(&arptab[i], sizeof(struct arpEntry));
     arptab[i].state = ARP_FREE;
   }
-
-
-
-
+//start network daemon process
   arpDaemonId = create((void *)arpDaemon, INITSTK, 3, "arpDaemon", 0);
   ready(arpDaemonId, 1);
-
 }

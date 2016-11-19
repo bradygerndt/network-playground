@@ -22,27 +22,23 @@ syscall arpRecv(struct ethergram *pkt)
 
   if(0 == mem)
   {
+//reply to arp requests
     if(ARP_RQST == op)
     {
       arpReply(pkt);
+
       if(!arpLookUp(rIp))
       {
         arpAlloc(rIp, sMac);
       }
     }
-
+//Add replying ip to arp entry table
     else if(ARP_REPLY == op)
     {
-      fprintf(CONSOLE, "%s\n", "Op is reply");
       if(!arpLookUp(rIp))
       {
-        fprintf(CONSOLE, "%s\n", "Allocating");
         arpAlloc(rIp, sMac);
       }
     }
   }
-
-
-  fprintf(CONSOLE, "\n\n");
-
 }
