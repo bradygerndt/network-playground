@@ -49,7 +49,7 @@ command xsh_arp(int nargs, char *args[])
 
 
 
-/* If necessary, zero out all of the indexes that were used in
+/* Zero out all of the indexes that were used in
 	args. They values are currently persistent*/
 	int a;
 	for(a = 0; a < nargs; a++)
