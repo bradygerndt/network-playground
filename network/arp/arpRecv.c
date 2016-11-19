@@ -24,7 +24,7 @@ syscall arpRecv(struct ethergram *pkt)
   fprintf(CONSOLE, "Protocol type --> %04x\n", arp->prtype);
   fprintf(CONSOLE, "Hardware length --> %d\n", arp->hwalen);
   fprintf(CONSOLE, "Protocol length --> %d\n", arp->pralen);
-  // fprintf(CONSOLE, "Op --> %d\n", ntohs(arp->op));
+  fprintf(CONSOLE, "Op --> %d\n", ntohs(arp->op));
   fprintf(CONSOLE, "Source MAC --> %02x:%02x:%02x:%02x:%02x:%02x\n", arp->addr[0], arp->addr[1],arp->addr[2], arp->addr[3], arp->addr[4], arp->addr[5], arp->addr[ETH_ADDR_LEN]);
   fprintf(CONSOLE, "Source IP --> %d.%d.%d.%d\n", arp->addr[ARP_ADDR_SPA], arp->addr[7], arp->addr[8], arp->addr[9]);
   fprintf(CONSOLE, "Destination MAC --> %02x:%02x:%02x:%02x:%02x:%02x\n", arp->addr[ARP_ADDR_DHA], arp->addr[11], arp->addr[12], arp->addr[13], arp->addr[14], arp->addr[15]);
@@ -38,21 +38,23 @@ syscall arpRecv(struct ethergram *pkt)
 
   if(0 == mem)
   {
-
-    // fprintf(CONSOLE, "%s\n", "This packet is for me!");
     if(ARP_RQST == op)
     {
       arpReply(pkt);
-      int l = (arpLookUp(rIp));
       if(!arpLookUp(rIp))
       {
         arpAlloc(rIp, sMac);
       }
     }
+
     else if(ARP_REPLY == op)
     {
-      fprintf(CONSOLE, "%s\n", "Receiving arp reply in arp recv");
-      arpAlloc(rIp, sMac);
+      fprintf(CONSOLE, "%s\n", "Op is reply");
+      if(!arpLookUp(rIp))
+      {
+        fprintf(CONSOLE, "%s\n", "Allocating");
+        arpAlloc(rIp, sMac);
+      }
     }
   }
 

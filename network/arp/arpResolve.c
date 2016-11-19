@@ -17,10 +17,6 @@ syscall arpResolve (uchar *ipaddr, uchar *mac)
   control(ETH0, ETH_CTRL_GET_MAC, (ulong) sMac, 0);
   dot2ip(nvramGet("lan_ipaddr\0"), ip);
 
-
-  //
-  // for(j = 0; j < 3; j++)
-  // {
     wait(sem);
     for (i = 0; i < ARP_NUM_ENTRY; i++)
     {
@@ -94,10 +90,6 @@ syscall arpResolve (uchar *ipaddr, uchar *mac)
     //  fprintf(CONSOLE, "Ether Destination MAC --> %x:%x:%x:%x:%x:%x\n", egram->dst[0], egram->dst[1],egram->dst[2], egram->dst[3], egram->dst[4], egram->dst[5], egram->dst[ETH_ADDR_LEN]);
     //  fprintf(CONSOLE, "Ether Source MAC --> %02x:%02x:%02x:%02x:%02x:%02x\n", egram->src[0], egram->src[1],egram->src[2], egram->src[3], egram->src[4], egram->src[5], egram->src[ETH_ADDR_LEN]);
     //  fprintf(CONSOLE, "ETYPE = %d\n", ntohs(egram->type));
-
-
-
-
   if((lenWritten = write(ETH0, egram, 60)) == SYSERR)
   {
     fprintf(CONSOLE, "%s\n", "Packet failed to send");
@@ -107,9 +99,6 @@ syscall arpResolve (uchar *ipaddr, uchar *mac)
   //Block with a time based while loop
 
 // }
-
-
-
 
   free(arpCast);
   free(egram);
