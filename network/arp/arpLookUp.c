@@ -11,12 +11,15 @@ syscall arpLookUp(uchar ipaddr[IP_ADDR_LEN])
   wait(sem);
   for (i = 0; i < ARP_NUM_ENTRY; i++)
   {
-    int mem = memcmp(ipaddr, arptab[i].praddr, IP_ADDR_LEN);
-    if(0 == mem)
+    if(ARP_USED == arptab[i].state)
     {
-      arptab[i].expires = clocktime + 1800;
-      signal(sem);
-      return OK;
+      int mem = memcmp(ipaddr, arptab[i].praddr, IP_ADDR_LEN);
+      if(0 == mem)
+      {
+        arptab[i].expires = clocktime + 1800;
+        signal(sem);
+        return OK;
+      }
     }
   }
     signal(sem);
