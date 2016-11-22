@@ -241,17 +241,18 @@ struct dhcpgram                 /**< DHCP Packet Variables          */
 #define DHCP_MESSAGE_INFORM   0x08
 
 /*ICMP Struct and definitions*/
-#define ICMP_ECHO_RQST  0x08
-#define ICMP_ECHO_REPLY 0x00
+#define ICMP_ECHO_RQST  8
+#define ICMP_ECHO_REPLY 0
 
 
 
 struct icmpgram
 {
-	ushort type;
-	ushort code;
-	ulong id;
-	ulong seq;
+	uchar type;
+	uchar code;
+	ushort checksum;
+	ushort id;
+	ushort seq;
 	uchar data[1];
 }
 
