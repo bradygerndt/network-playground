@@ -16,6 +16,7 @@ etherPkt = (struct ethergram *) malloc(sizeof(struct ethergram) + sizeof(struct 
 icmpPkt->type = ICMP_ECHO_RQST;
 icmpPkt->code = 0;
 icmpPkt->checksum = 0;
+icmpPkt->
 
 chksum = checksum(icmpPkt, sizeof(struct icmpgram));
 
