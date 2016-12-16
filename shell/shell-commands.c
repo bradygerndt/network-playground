@@ -17,6 +17,7 @@ command xsh_memstat(int, char *[]);
 command xsh_ps(int, char *[]);
 command xsh_test(int, char *[]);
 command xsh_arp(int, char *[]);
+command xsh_iptest(int, char *[]);
 
 /* This structure describes commands available to the shell. */
 struct centry commandtab[] = {
@@ -29,6 +30,7 @@ struct centry commandtab[] = {
     {"ps", FALSE, xsh_ps},
     {"test", FALSE, xsh_test},
     {"arp", FALSE, xsh_arp},
+    {"iptest", FALSE, xsh_iptest},
     //add ping entry
     {"?", FALSE, xsh_help}
 

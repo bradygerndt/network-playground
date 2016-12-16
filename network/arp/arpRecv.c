@@ -17,8 +17,8 @@ syscall arpRecv(struct ethergram *pkt)
   mem = memcmp(sIp, dIp, IP_ADDR_LEN);
   op = ntohs(arp->op);
 
-
-  arpPrintPkt(pkt);
+/*enable this if you want to see the packets*/
+  //arpPrintPkt(pkt);
 
   if(0 == mem)
   {

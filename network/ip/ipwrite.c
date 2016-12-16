@@ -1,12 +1,13 @@
 #include <xinu.h>
 
-syscall ipwrite(uchar *payload, int length, int protocol, uchar dstIp[IP_ADDR_LEN])
+syscall ipwrite(uchar *payload, int length, int protocol, uchar dstIP[IP_ADDR_LEN])
 {
-  uchar srcIp[IP_ADDR_LEN];
+  uchar srcIP[IP_ADDR_LEN];
 
-  dot2ip(nvramGet("lan_ipaddr\0"), srcIp);
+  dot2ip(nvramGet("lan_ipaddr\0"), srcIP);
 
   struct ipgram *ip;
+  //Do we need to malloc this?
 
   ip = (struct ipgram *) malloc(sizeof(struct ipgram) + length);
   ip->ver_ihl = (char) (IPv4_VERSION << 4);
@@ -18,7 +19,23 @@ syscall ipwrite(uchar *payload, int length, int protocol, uchar dstIp[IP_ADDR_LE
   ip->ttl = IPv4_TTL;
   ip->proto = protocol;
   ip->chksum = checksum(&ip, IPv4_HDR_LEN);
-  ip->src = srcIp;
+  memcpy(&ip->src, &srcIP, IP_ADDR_LEN);
+  memcpy(&ip->dst, dstIP, IP_ADDR_LEN);
+  memcpy(&ip->opts, &payload, sizeof(payload));
+
+
+
+  fprintf(CONSOLE, "ver_ihl = %d\n", ip->ver_ihl);
+  fprintf(CONSOLE, "tos = %d\n", ip->tos);
+  fprintf(CONSOLE, "len = %d\n", ip->len);
+  fprintf(CONSOLE, "id = %d\n", ip->id);
+  fprintf(CONSOLE, "flags_froff = %d\n", ip->flags_froff);
+  fprintf(CONSOLE, "TTL = %d\n", ip->ttl);
+  fprintf(CONSOLE, "Protocol = %d\n", ip->proto);
+  fprintf(CONSOLE, "chksum = %d\n", ip->chksum);
+  fprintf(CONSOLE, "Source IP = %d.%d.%d.%d\n", ip->src[0], ip->src[1], ip->src[2], ip->src[3]);
+  fprintf(CONSOLE, "Destination IP = %d.%d.%d.%d\n", ip->dst[0], ip->dst[1], ip->dst[2], ip->dst[3]);
+
 
 
 
