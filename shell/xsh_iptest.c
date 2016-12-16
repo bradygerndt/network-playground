@@ -25,7 +25,7 @@ if(nargs < 2)
 uchar payload[] = "Test";
 uchar dstIP[IP_ADDR_LEN];
 dot2ip(args[1], dstIP);
-fprintf(CONSOLE, "You provided = %d.%d.%d.%d\n", dstIP[0], dstIP[1], dstIP[2], dstIP[3]);
+fprintf(CONSOLE, "Payload in shell command is %s\n", payload);
 ipwrite(&payload, 4, IPv4_PROTO_TCP, dstIP);
 
 	return OK;

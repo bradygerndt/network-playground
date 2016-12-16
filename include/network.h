@@ -254,7 +254,7 @@ struct icmpgram
 	ushort id;
 	ushort seq;
 	uchar data[1];
-}
+};
 
 
 

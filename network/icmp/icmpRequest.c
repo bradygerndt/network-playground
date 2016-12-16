@@ -3,26 +3,20 @@
 
 syscall icmpRequest(uchar ip[IP_ADDR_LEN])
 {
-  struct ethergram *ethPkt;
-  struct ipgram *ipPkt;
-  struct icmpgram *icmpPkt;
+  struct icmpgram *icmpPkt = NULL;
   ushort chksum;
 
   //malloc all deez foolz
-icmpPkt = (struct icmpPkt *) malloc(sizeof(struct icmpPkt));
-ipPkt = (struct ipgram *) malloc(sizeof(struct ipgram) + sizeof(struct icmpPkt));
-etherPkt = (struct ethergram *) malloc(sizeof(struct ethergram) + sizeof(struct ipgram) + sizeof(struct icmpPkt));
+icmpPkt = (struct icmpPkt *) malloc(sizeof(struct icmpgram));
 
 icmpPkt->type = ICMP_ECHO_RQST;
 icmpPkt->code = 0;
 icmpPkt->checksum = 0;
-icmpPkt->
 
 chksum = checksum(icmpPkt, sizeof(struct icmpgram));
 
 icmpPkt->checksum = chksum;
-
-
-
+//send to ip
+ipwrite(icmpPkt, sizeof(struct icmpgram), IPv4_PROTO_ICMP, ip);
 
 }
