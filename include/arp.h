@@ -81,6 +81,9 @@ syscall arpAlloc(uchar ipaddr[IP_ADDR_LEN], uchar mac[ETH_ADDR_LEN]);
 syscall arpFree(uchar ipaddr[IP_ADDR_LEN]);
 syscall netwrite(uchar mac[ETH_ADDR_LEN], struct ipgram *ip);
 syscall ipRecv(struct ethergram *pkt);
+void printIP(struct ipgram *pkt);
+void printICMP(struct icmpgram *icmp);
+syscall icmpRecv(uchar ip[IP_ADDR_LEN]);
 
 
 #endif

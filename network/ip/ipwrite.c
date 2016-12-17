@@ -19,14 +19,15 @@ syscall ipwrite(uchar *payload, int length, int protocol, uchar dstIP[IP_ADDR_LE
   ip->ver_ihl += (IPv4_MIN_IHL); //Fill in with version and header length
   ip->tos = IPv4_TOS_ROUTINE;
   ip->len = length + IPv4_HDR_LEN;//add header length
-  ip->id = ntohs(0);
-  ip->flags_froff =ntohs(0);
+  ip->id = htons(0);
+  ip->flags_froff = htons(0);
   ip->ttl = IPv4_TTL;
   ip->proto = protocol;
   ip->chksum = checksum(&ip, IPv4_HDR_LEN);
   memcpy(&ip->src, &srcIP, IP_ADDR_LEN);
   memcpy(&ip->dst, dstIP, IP_ADDR_LEN);
   memcpy(&ip->opts, payload, length);
+  //printIP(ip);
 
   //Send down to netwrite
   netwrite(dstMac, ip);
