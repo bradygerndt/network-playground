@@ -29,6 +29,11 @@ void arpDaemon()
         arpRecv(pkt);
         free(egram);
        }
+
+       if (type == ETYPE_IPv4)
+       {
+         ipRecv(pkt);
+       }
      }
   }
  }
