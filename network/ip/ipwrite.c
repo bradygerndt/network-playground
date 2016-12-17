@@ -10,7 +10,6 @@ syscall ipwrite(uchar *payload, int length, int protocol, uchar dstIP[IP_ADDR_LE
   dot2ip(nvramGet("lan_ipaddr\0"), srcIP);
 
   arpResolve(dstIP, &dstMac);
-  fprintf(CONSOLE, "DST MAC --> %02x:%02x:%02x:%02x:%02x:%02x\n", dstMac[0], dstMac[1],dstMac[2], dstMac[3], dstMac[4], dstMac[5]);
 
   struct ipgram *ip;
   //Do we need to malloc this?
@@ -29,7 +28,8 @@ syscall ipwrite(uchar *payload, int length, int protocol, uchar dstIP[IP_ADDR_LE
   memcpy(&ip->dst, dstIP, IP_ADDR_LEN);
   memcpy(&ip->opts, payload, length);
 
-
+  //Send down to netwrite
+  netwrite(dstMac, ip);
 
   // fprintf(CONSOLE, "ver_ihl = %02x\n", ip->ver_ihl);
   // fprintf(CONSOLE, "tos = %d\n", ip->tos);

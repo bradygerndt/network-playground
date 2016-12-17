@@ -79,5 +79,6 @@ syscall arpReply(struct ethergram *pkt);
 syscall arpLookUp(uchar ipaddr[IP_ADDR_LEN]);
 syscall arpAlloc(uchar ipaddr[IP_ADDR_LEN], uchar mac[ETH_ADDR_LEN]);
 syscall arpFree(uchar ipaddr[IP_ADDR_LEN]);
+syscall netwrite(uchar mac[ETH_ADDR_LEN], struct ipgram *ip);
 
 #endif
