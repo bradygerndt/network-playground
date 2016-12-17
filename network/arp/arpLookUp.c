@@ -18,7 +18,7 @@ syscall arpLookUp(uchar ipaddr[IP_ADDR_LEN])
       {
         arptab[i].expires = clocktime + 1800;
         signal(sem);
-        return OK;
+        return i;
       }
     }
   }

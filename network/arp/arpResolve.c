@@ -5,8 +5,11 @@ syscall arpResolve (uchar *ipaddr, uchar *mac)
   struct arpgram *arpCast = NULL;
   struct ethergram *egram = NULL;
   uchar *buf = NULL;
-  uchar sMac[ETH_ADDR_LEN], ip[IP_ADDR_LEN];
-  int i, k, lenWritten;
+  uchar sMac[ETH_ADDR_LEN], ip[IP_ADDR_LEN], dIP[IP_ADDR_LEN];
+  int i, k, j, lenWritten;
+
+  memcpy(dIP, ipaddr, IP_ADDR_LEN);
+
 
 
   buf = (uchar *) malloc(PKTSZ);
@@ -16,19 +19,15 @@ syscall arpResolve (uchar *ipaddr, uchar *mac)
   control(ETH0, ETH_CTRL_GET_MAC, (ulong) sMac, 0);
   dot2ip(nvramGet("lan_ipaddr\0"), ip);
 
+
 //See if it's already in the table
-    wait(sem);
-    for (i = 0; i < ARP_NUM_ENTRY; i++)
+    if((j = arpLookUp(dIP)) != SYSERR)
     {
-      if(*ipaddr == arptab[i].praddr)
-      {
-        mac = arptab[i].hwaddr;
-        arptab[i].expires = clocktime + 1800;
-        signal(sem);
-        return OK;
-      }
+      memcpy(mac, arptab[j].hwaddr, ETH_ADDR_LEN);
+      return OK;
     }
-    signal(sem);
+
+
   //If it's not in the table, set up an ARP broadcast
 
   //Build the ARP broadcast message
